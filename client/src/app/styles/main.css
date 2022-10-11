@@ -1,0 +1,44 @@
+.container-main {
+    background: red;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container-users {
+    width: 32%;
+    height: 100%;
+    background: blue;
+    overflow-y: auto;
+    padding: 8px;
+}
+
+.container-share {
+    width: 100%;
+    height: 20%;
+    background: green;
+    text-align: center;
+}
+.button-share {
+    background: #2a2;
+    outline: none;
+    border: none;
+    width: 100%;
+    color: #fff;
+    padding: 8px;
+    cursor: pointer;
+    height: 44px;
+    font-size: 24px;
+}
+.button-share:hover {
+    background: #282;
+}
+.button-share:active {
+    background: #2a2;
+}
+
+.container-users-list {
+    height: 80%;
+}

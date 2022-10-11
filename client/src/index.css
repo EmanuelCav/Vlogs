@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Piazzolla', serif;
+}
+
+.container-content {
+    padding: 20px 35px
+}
+
+@import url('./app/styles/header.css');
+@import url('./app/styles/index.css');
+@import url('./app/styles/main.css');
