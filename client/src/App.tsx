@@ -1,7 +1,6 @@
-import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { Provider, useSelector } from 'react-redux';
-import { BrowserRouter as Router, Routes, Route, } from 'react-router-dom'
+import { useSelector } from 'react-redux';
+import { BrowserRouter as Router, Routes, Route, Navigate, } from 'react-router-dom'
 
 import Header from './app/components/header/header';
 
@@ -9,8 +8,8 @@ import PrivateRoute from './app/components/private/privateRoute';
 
 import Index from './app/routes';
 import Main from './app/routes/main';
-
-import store from './app/store';
+import Profile from './app/routes/profile';
+import Vlog from './app/routes/vlog';
 
 function App() {
 
@@ -23,9 +22,13 @@ function App() {
           }
           <div className='container-content'>
             <Routes>
-              <Route path='/' element={<Index />} />
+              <Route path='/' element={user.isLoggedIn ? <Navigate to="/main"/> : <Index />}/>
               <Route path='/main' element={<PrivateRoute />} >
                 <Route path='/main' element={<Main />} />
+                <Route path='/main/:id' element={<Profile />} />
+              </Route>
+              <Route path='/vlog' element={<PrivateRoute />} >
+                <Route path='/vlog/:id' element={<Vlog />} />
               </Route>
             </Routes>
           </div>

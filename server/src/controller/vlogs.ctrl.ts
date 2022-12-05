@@ -26,9 +26,11 @@ export const vlogs = async (req: Request, res: Response): Promise<Response> => {
 
 export const myVlogs = async (req: Request, res: Response): Promise<Response> => {
 
+    const { id } = req.params
+
     try {
 
-        const showVlogs = await Vlog.find({ userId: req.user })
+        const showVlogs = await Vlog.find({ userId: id })
 
         return res.status(200).json({
             vlogs: showVlogs,
@@ -88,6 +90,8 @@ export const createVlog = async (req: Request, res: Response): Promise<Response>
         return res.status(200).json(vlogSaved)
 
     } catch (error: any) {
+        console.log(error);
+        
         return res.status(500).json({ message: error.message })
     }
 
@@ -144,4 +148,28 @@ export const likeVlog = async (req: Request, res: Response): Promise<Response> =
     }
 
 }
+
+export const unLikeVlog = async (req: Request, res: Response): Promise<Response> => {
+
+    const { id } = req.params;
+
+    try {
+
+        const vlog = await Vlog.findById(id)
+        
+        const index = vlog.likes.indexOf(req.user)
+        vlog.likes.splice(index, 1)
+
+        const vlogUnLiked = await Vlog.findByIdAndUpdate(id, vlog, {
+            new: true
+        })
+
+        return res.status(200).json(vlogUnLiked)
+        
+    } catch (error: any) {
+        return res.status(500).json({ message: error.message })
+    }
+
+}
+
 

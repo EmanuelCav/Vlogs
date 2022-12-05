@@ -12,7 +12,8 @@ const Users = () => {
 
   return (
     <div className='container-users'>
-      <Share />
+      <Share user={user} />
+      <h1 className='title-vlogs'>Suggested users</h1>
       {
         user.users.map((user: IUser) => {
           return <User user={user} key={user.id} />

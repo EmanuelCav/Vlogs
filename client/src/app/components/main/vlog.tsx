@@ -1,13 +1,23 @@
 import React from 'react'
 
-const Vlog = ({ vlog }: any) => {
+import VlogProfile from '../profile/components/vlogProfile'
 
-  console.log(vlog);
-  
-    
+import { IVlog } from '../../interfaces/Vlogs'
+
+const Vlogs = ({ vlog, user }: any) => {
+
   return (
-    <div></div>
+    <div className='contain-vlogs'>
+      <h1 className='title-vlogs'>Vlogs</h1>
+      <div className='container-vlogs'>
+        {
+          vlog.vlogs.map((v: IVlog, index: number) => {
+            return <VlogProfile vlog={v} user={user} key={index} />
+          })
+        }
+      </div>
+    </div>
   )
 }
 
-export default Vlog
+export default Vlogs

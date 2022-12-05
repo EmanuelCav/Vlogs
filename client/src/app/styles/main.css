@@ -1,20 +1,16 @@
 .container-main {
-    background: red;
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
 .container-users {
-    width: 32%;
+    width: 28%;
     height: 100%;
-    background: blue;
     overflow-y: auto;
     padding: 8px;
 }
-
 .container-share {
     width: 100%;
     height: 20%;
@@ -38,7 +34,156 @@
 .button-share:active {
     background: #2a2;
 }
-
 .container-users-list {
     height: 80%;
+    cursor: pointer;
+    padding: 8px;
+    border: 1px solid #28f;
+    margin-top: 4px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    word-wrap: break-word;
+}
+.container-users-list:hover {
+    background: #ddf;
+}
+
+.contain-vlogs {
+    display: block;
+    width: 72%;
+    height: 100%;
+    padding: 12px;
+}
+.container-vlogs {
+    padding: 8px;
+    border: 1px solid #28f;
+    border-radius: 15%;
+    overflow-y: auto;
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.title-vlogs {
+    font-size: 32px;
+}
+
+/* CREATE */
+
+.container-create {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: #111;
+    opacity: .8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container-form-create {
+    position: fixed;
+    z-index: 10;
+    width: 50%;
+    height: 90%;
+    background: #fff;
+    padding: 24px;
+}
+.container-actions-create {
+    display: flex;
+    height: 55px;
+    justify-content: right;
+    align-items: flex-start;
+}
+.cancel-create {
+    color: #f44;
+    cursor: pointer;
+    user-select: none;
+    font-size: 24px;
+    margin-right: 19px;
+}
+.create-create {
+    outline: none;
+    border: none;
+    background: #fff;
+    color: #4f4;
+    cursor: pointer;
+    user-select: none;
+    font-size: 24px;
+    margin-top: 5px;
+}
+.create-create:hover {
+    text-decoration: underline;
+}
+.cancel-create:hover {
+    text-decoration: underline;
+}
+
+/* GET VLOG */
+
+.container-getvlog {
+    border: 1px solid #28f;
+    border-radius: 15%;
+    padding: 12px;
+    word-wrap: break-word;
+    text-align: center;
+}
+.title-getvlog {
+    font-size: 40px;
+    text-decoration: underline;
+}
+.description-getvlog {
+    font-size: 28px;
+    margin-top: 5px;
+    border-bottom: 1px solid #ddf;
+}
+.information-getvlog {
+    font-size: 20px;
+    margin-top: 12px;
+}
+.image-getvlog {
+    width: 47%;
+    height: 348px;
+    user-select: none;
+    margin: 12px;
+}
+.delete-getvlog {
+    outline: none;
+    border: none;
+    background: #f32;
+    padding: 7px;
+    border-radius: 6%;
+    color: #fff;
+    font-size: 18px;
+    margin: 12px;
+    cursor: pointer;
+    user-select: none;
+    width: 103px;
+}
+.delete-getvlog:hover {
+    background: #a00;
+}
+.delete-getvlog:active {
+    background: #f32;
+}
+.update-getvlog {
+    outline: none;
+    border: none;
+    background: #23f;
+    padding: 7px;
+    border-radius: 6%;
+    color: #fff;
+    font-size: 18px;
+    margin: 12px;
+    cursor: pointer;
+    user-select: none;
+    width: 103px;
+}
+.update-getvlog:hover {
+    background: #00a;
+}
+.update-getvlog:active {
+    background: #23f;
 }

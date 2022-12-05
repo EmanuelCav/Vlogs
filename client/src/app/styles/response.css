@@ -1,0 +1,35 @@
+.container-message {
+    background: #f67;
+    width: 75%;
+    padding: 6px;
+    border-radius: 12%;
+    text-align: center;
+}
+.message {
+    font-size: 18px;
+    color: #fff;
+    user-select: none;
+}
+.container-message-success {
+    background: #6f7;
+    width: 75%;
+    padding: 6px;
+    border-radius: 12%;
+    text-align: center;
+}
+.container-loading {
+    top: -2px;
+    left: -2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 42;
+    height: 100vh;
+    width: 100%;
+    background: #fff;
+}
+.image-loading {
+    width: 146px;
+    user-select: none;
+}

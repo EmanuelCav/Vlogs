@@ -2,7 +2,9 @@
 import { 
     AUTH,
     LOGOUT,
-    USERS
+    USERS,
+    USER,
+    UPDATE_PROFILE
 } from "../constants/user.const";
 
 import { initialStateUser, action } from "../../types/server/reducer.props";
@@ -10,6 +12,7 @@ import { initialStateUser, action } from "../../types/server/reducer.props";
 const initialState = {
     users: [],
     user: {},
+    getUser: {},
     isLoggedIn: false
 }
 
@@ -21,6 +24,13 @@ const userReducer = (state: initialStateUser = initialState, action: action) => 
                 ...state,
                 users: action.payload
             }
+
+        case USER:
+            return  {
+                ...state,
+                getUser: action.payload
+            }
+
         case AUTH:
             localStorage.setItem("auth-data", action.payload.token)
             return {
@@ -28,12 +38,21 @@ const userReducer = (state: initialStateUser = initialState, action: action) => 
                 user: action?.payload,
                 isLoggedIn: true
             }
+
         case LOGOUT:
             localStorage.removeItem("auth-data")
             return {
                 ...state,
                 user: {},
-                isLoggedIn: false
+                isLoggedIn: false,
+                getUser: {},
+                users: []
+            }
+
+        case UPDATE_PROFILE:
+            return {
+                ...state,
+                getUser: action.payload
             }
     
         default:

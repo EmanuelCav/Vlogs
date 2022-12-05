@@ -1,10 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const Share = () => {
+import Create from './components/create'
+
+const Share = ({ user }: any) => {
+
+  const [isCreating, setIsCreating] = useState(false)
+
+  const isCreatingVlog = () => {
+    setIsCreating(!isCreating)
+  }
+
   return (
-    <div className='container-share'>
-        <button className='button-share'>SHARE A VLOG</button>
-    </div>
+    <>
+      <div className='container-share'>
+        <button className='button-share' onClick={isCreatingVlog}>SHARE A VLOG</button>
+      </div>
+      {
+        isCreating && <Create setIsCreating={setIsCreating} user={user} />
+      }
+    </>
   )
 }
 

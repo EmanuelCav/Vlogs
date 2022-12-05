@@ -1,11 +1,13 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { QueryResult } from "pg";
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import { unlink } from "fs-extra";
 
 import connection from "../data/database";
 
 import { IUser } from "interface/User";
+import { cloudConnection } from "../images/cloud";
 
 const { JWT } = process.env;
 
@@ -24,7 +26,7 @@ export const users = async (req: Request, res: Response): Promise<Response> => {
             users: showUsers,
             amount: amountOfUsers
         })
-        
+
     } catch (error: any) {
         return res.status(500).json({ message: error.message })
     }
@@ -42,11 +44,11 @@ export const usersSugested = async (req: Request, res: Response): Promise<Respon
 
         const rowsUsers: QueryResult = await connection.query(query)
         const rowUser: QueryResult = await connection.query(user)
-        
+
         const showUsers = rowsUsers.rows.filter((user) => user.email != rowUser.rows[0].email)
 
         return res.status(200).json(showUsers)
-        
+
     } catch (error: any) {
         return res.status(500).json({ message: error.message })
     }
@@ -66,7 +68,7 @@ export const user = async (req: Request, res: Response): Promise<Response> => {
         const showUser = rowsUser.rows[0]
 
         return res.status(200).json(showUser)
-        
+
     } catch (error: any) {
         return res.status(500).json({ message: error.message })
     }
@@ -89,18 +91,18 @@ export const register = async (req: Request, res: Response): Promise<Response> =
     try {
 
         await connection.query(query)
-        
+
         const user: QueryResult = await connection.query(queryFound)
 
         const token = jwt.sign({ id: user.rows[0].id }, `${JWT}`, {
             expiresIn: '7d'
         })
-        
+
         return res.status(200).json({
             user: user.rows[0],
             token
         })
-        
+
     } catch (error: any) {
         return res.status(500).json({ message: error.message })
     }
@@ -115,13 +117,13 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
 
     try {
 
-        if(!email || !password) {
+        if (!email || !password) {
             return res.status(400).json({ message: "There are empty fields" })
         }
 
         const user: QueryResult = await connection.query(query)
 
-        if(user.rowCount == 0) {
+        if (user.rowCount == 0) {
             return res.status(400).json({ message: "User does not exists" })
         }
 
@@ -129,7 +131,7 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
 
         const validation = await bcrypt.compare(password, showUser?.pass)
 
-        if(!validation) {
+        if (!validation) {
             return res.status(400).json({ message: "Fields do not match" })
         }
 
@@ -141,7 +143,7 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
             user: showUser,
             token
         })
-        
+
     } catch (error: any) {
         return res.status(500).json({ message: error.message })
     }
@@ -156,20 +158,46 @@ export const removeUser = async (req: Request, res: Response): Promise<Response>
     const queryUser = `SELECT * FROM users WHERE id=${id}`;
 
     try {
-        
-        const rows = await connection.query(queryUser)
 
-        if(rows.rowCount == 0) {
+        const rows: QueryResult = await connection.query(queryUser)
+
+        if (rows.rowCount == 0) {
             return res.status(401).json({ message: "User does not exists" })
         }
 
         await connection.query(query)
 
         return res.status(200).json({ message: "User was removed" })
-        
+
     } catch (error: any) {
         return res.status(500).json({ message: error.message })
     }
 
 }
 
+export const updatePhoto = async (req: Request, res: Response) => {
+
+    const { id } = req.params;
+
+    const result = await cloudConnection.uploader.upload(req.file?.path!)
+
+    try {
+
+        const query = `SELECT * FROM users WHERE id=${id}`
+        const users: QueryResult = await connection.query(query)
+
+        if (req.file) {
+            users.rows[0].picture = result.url
+            await unlink(req.file.path)
+        }
+
+        const queryUpdate = `UPDATE users SET ${users} WHERE id=${id}`
+        const newUser: QueryResult = await connection.query(queryUpdate)
+
+        return res.status(200).json(newUser.rows[0])
+
+    } catch (error: any) {
+        return res.status(500).json({ message: error.message })
+    }
+
+}

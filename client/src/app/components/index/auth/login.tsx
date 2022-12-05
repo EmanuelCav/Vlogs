@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { loginAction } from '../../../server/actions/user.action';
 
 import { authProps } from "../../../types/auth/auth.props";
+import ErrorLogin from '../../../response/messages/errorLogin';
 
 const Login = ({ setIsRegister }: authProps) => {
 
@@ -22,7 +23,7 @@ const Login = ({ setIsRegister }: authProps) => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setUserData({...userData, [name]: value})
+    setUserData({ ...userData, [name]: value })
   }
 
   const handleSumbit = (e: FormEvent<HTMLFormElement>) => {
@@ -36,6 +37,7 @@ const Login = ({ setIsRegister }: authProps) => {
 
   return (
     <div className='container-login'>
+      <ErrorLogin />
       <form className='form-login' onSubmit={handleSumbit}>
         <div className='separator'>
           <label className='label-form'>Email</label>

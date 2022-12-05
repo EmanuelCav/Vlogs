@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
-import Vlog from '../components/main/vlog';
+import Vlogs from '../components/main/vlog';
 import Users from '../components/main/users';
 
 import { usersAction } from '../server/actions/user.action';
 import { vlogsAction } from '../server/actions/vlog.action';
-
-import { IVlog } from "../interfaces/Vlogs";
 
 const Main = () => {
 
@@ -23,12 +21,8 @@ const Main = () => {
 
   return (
     <div className='container-main'>
-      {
-        vlog.vlogs.map((vlog: IVlog) => {
-          return <Vlog vlog={vlog} key={vlog._id} />
-        })
-      }
       <Users />
+      <Vlogs vlog={vlog} user={user} />
     </div>
   )
 }
