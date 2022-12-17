@@ -6,9 +6,11 @@ const { DATABASEMONGO, HOSTMONGO } = process.env;
 
     try {
 
-        await mongoose.connect(`mongodb://${HOSTMONGO}/${DATABASEMONGO}`)
+        const connection = await mongoose.connect(`mongodb://${HOSTMONGO}/${DATABASEMONGO}`)
 
-        console.log("Database mongo is running");
+        if(connection.STATES.connected) {
+            console.log("MongoDB is running");
+        }
         
         
     } catch (error) {

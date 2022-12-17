@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { QueryResult } from "pg";
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
@@ -8,6 +8,7 @@ import connection from "../data/database";
 
 import { IUser } from "interface/User";
 import { cloudConnection } from "../images/cloud";
+import { infoEmail } from "../middleware/validation/mailValid";
 
 const { JWT } = process.env;
 
@@ -93,6 +94,8 @@ export const register = async (req: Request, res: Response): Promise<Response> =
         await connection.query(query)
 
         const user: QueryResult = await connection.query(queryFound)
+
+        await infoEmail(email)
 
         const token = jwt.sign({ id: user.rows[0].id }, `${JWT}`, {
             expiresIn: '7d'
